@@ -90,7 +90,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void removeAlbum(int id) {
-
+        albumRepository.deleteById(id);
     }
 
     @Override
@@ -98,6 +98,15 @@ public class AlbumServiceImpl implements AlbumService {
         List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseID));
         for (Song song : songs) {
             song.setAlbumId(albumId);
+            songService.addSong(song);
+        }
+    }
+
+    @Override
+    public void addAllSongsToLastAlbum(String releaseId) {
+        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseId));
+        for (Song song : songs) {
+            song.setAlbumId(albumRepository.findTopByOrderByIdDesc().getId());
             songService.addSong(song);
         }
     }

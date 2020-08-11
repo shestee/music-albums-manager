@@ -17,7 +17,15 @@
 		<h3>Albums Directory</h3>
 		<hr>
 		
-		<p class="h4 mb-4">Save Album</p>
+		<p class="h4 mb-4">
+			Save Album
+
+		<form th:action="@{/showFormForAddDataFromDiscogs(discogsId=${id})}">
+			<input name="discogsId" type="text" th:value="*{discogsId}">
+			<button type="submit" class="btn btn-info col-2">Submit</button>
+		</form>
+
+		</p>
 		
 		<form action="#" th:action="@{/add}"
 						 th:object="${album}" method="POST">

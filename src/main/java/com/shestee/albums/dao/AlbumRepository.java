@@ -7,4 +7,6 @@ public interface AlbumRepository extends JpaRepository<Album, Integer> {
 
     // no need to write any code, it works just like this
 
+    Album findTopByOrderByIdDesc();
+
 }

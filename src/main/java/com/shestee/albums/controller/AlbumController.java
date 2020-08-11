@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class AlbumController {
 
-    private static String discogsId;
+    private String discogsId;
     //private static Album album;
 
     @Autowired
@@ -61,10 +61,10 @@ public class AlbumController {
     @PostMapping("/add")
     public String addAlbum(@ModelAttribute("album") Album album) {
         albumService.addAlbum(album);
-        /*if (discogsId != null) {
-            albumService.addAllSongsToAlbum(album.getId(), discogsId);
+        if (discogsId != null) {
+            albumService.addAllSongsToLastAlbum(discogsId);
         }
-*/
+
         return "redirect:/list";
     }
 
@@ -77,12 +77,33 @@ public class AlbumController {
         return "albums/show-songs";
     }
 
-   @GetMapping("/showFormForAdd")
+    @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
         Album album = new Album();
 
         theModel.addAttribute("album", album);
 
         return "/albums/album-form";
+    }
+
+    @GetMapping("/showFormForAddDataFromDiscogs")
+    public String showFormForAddDataFromDiscogs(@RequestParam("discogsId") String discogsId, Model theModel) {
+        this.discogsId = discogsId;
+
+        // ten album poniżej ma być sparsowany z discogsa
+        Album album = albumParser.parseAlbumFromAlbumJson(discogsId);
+
+        theModel.addAttribute("album", album);
+        /*albumService.addAlbum(album);
+        albumService.addAllSongsToLastAlbum(discogsId);*/
+
+        return "/albums/album-form";
+    }
+
+    @GetMapping("/delete")
+    public String removeAlbumById(@RequestParam("albumId") int id) {
+        albumService.removeAlbum(id);
+
+        return "redirect:/list";
     }
 }

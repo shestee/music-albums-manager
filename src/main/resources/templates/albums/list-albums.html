@@ -49,21 +49,21 @@
 				<td th:text="${tempAlbum.year}"/>
 
 				<!-- Add update button link -->
-				<!--<td>
+				<td>
 					<div class="text-center">
-						&lt;!&ndash; Add "update" button/link &ndash;&gt;
-						<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+						<!-- Add "update" button/link -->
+						<!--<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
 							class="btn btn-info btn-sm">
 							Update
-						</a>
+						</a>-->
 						
-						&lt;!&ndash; Add "delete" button/link &ndash;&gt;
-						<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+						<!-- Add "delete" button/link -->
+						<a th:href="@{/delete(albumId=${tempAlbum.id})}"
 							class="btn btn-danger btn-sm"
-							onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+							onclick="if (!(confirm('Are you sure you want to delete this album?'))) return false">
 							Delete
 						</a>
-					</div>-->
+					</div>
 					
 				</td>
 			</tr>
