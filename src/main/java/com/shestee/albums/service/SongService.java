@@ -6,6 +6,8 @@ import java.util.List;
 public interface SongService {
     List<Song> getAllSongs();
 
+    List<Song> findByAlbumId(int albumId);
+
     Song getById(int id);
 
     List<Song> findByTitle(String title);

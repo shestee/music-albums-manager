@@ -1,6 +1,8 @@
 package com.shestee.albums.service;
 
+import com.shestee.albums.dao.SongRepository;
 import com.shestee.albums.entity.Song;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +10,22 @@ import java.util.List;
 @Service
 public class SongServiceImpl implements SongService {
 
+    private SongRepository songRepository;
+
+    @Autowired
+    public SongServiceImpl(SongRepository songRepository) {
+        this.songRepository = songRepository;
+    }
+
     @Override
     public List<Song> getAllSongs() {
         return null;
+    }
+
+    @Override
+    public List<Song> findByAlbumId(int albumId) {
+        List<Song> songs = songRepository.findByAlbumIdOrderByTrackNumber(albumId);
+        return songs;
     }
 
     @Override
@@ -35,7 +50,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void addSong(Song song) {
-
+        songRepository.save(song);
     }
 
     @Override

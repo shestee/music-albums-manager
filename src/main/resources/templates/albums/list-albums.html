@@ -19,8 +19,9 @@
 	<hr>
 	
 	<!-- Add a button -->
-	<a th:href="@{/employees/showFormForAdd}"
-		class="btn btn-primary btn-small mb-3">
+	<a th:href="@{/employees/add}"
+		class="btn btn-primary btn-small mb-3"
+		onclick="if(!(confirm('Are you sure you want to add this album?'))) return false">
 		Add Album
 	</a>
 	
@@ -42,7 +43,7 @@
 			<tr th:each="tempAlbum : ${albums}">
 				<td th:text="${tempAlbum.id}"/>
 				<td th:text="${tempAlbum.artist}"/>
-				<td th:text="${tempAlbum.title}"/>
+				<td><a th:href="@{/showSongs(albumId=${tempAlbum.id})}" th:text="${tempAlbum.title}" /></td>
 				<td th:text="${tempAlbum.genre}"/>
 				<td th:text="${tempAlbum.medium}"/>
 				<td th:text="${tempAlbum.catalogueNumber}"/>

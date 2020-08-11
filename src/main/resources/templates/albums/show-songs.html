@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+
+    <title>Album Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Album Directory</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th width="10">Track</th>
+            <th>Title</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- Thymeleaf expression for looping over data (here: list of employees) -->
+        <tr th:each="tempSong : ${songs}">
+            <td th:text="${tempSong.trackNumber}"/>
+            <td th:text="${tempSong.title}"/>
+
+            <!-- Add update button link -->
+            <!--<td>
+                <div class="text-center">
+                    &lt;!&ndash; Add "update" button/link &ndash;&gt;
+                    <a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+                        class="btn btn-info btn-sm">
+                        Update
+                    </a>
+
+                    &lt;!&ndash; Add "delete" button/link &ndash;&gt;
+                    <a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+                        class="btn btn-danger btn-sm"
+                        onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                        Delete
+                    </a>
+                </div>
+
+            </td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>

@@ -5,6 +5,8 @@ import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import com.shestee.albums.entity.enums.LengthType;
 import com.shestee.albums.entity.enums.Medium;
+import com.shestee.albums.parsers.AlbumJsonParser;
+import com.shestee.albums.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,12 @@ import java.util.List;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
+
+    @Autowired
+    JsonUtil jsonUtil;
+
+    @Autowired
+    SongService songService;
 
     private AlbumRepository albumRepository;
 
@@ -67,7 +75,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void addAlbum(Album album) {
-
+        albumRepository.save(album);
     }
 
     @Override
@@ -87,6 +95,10 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void addAllSongsToAlbum(int albumId, String releaseID) {
-
+        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseID));
+        for (Song song : songs) {
+            song.setAlbumId(albumId);
+            songService.addSong(song);
+        }
     }
 }

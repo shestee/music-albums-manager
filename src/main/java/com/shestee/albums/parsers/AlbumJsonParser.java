@@ -7,6 +7,7 @@ import com.shestee.albums.entity.enums.Medium;
 import com.shestee.albums.utils.JsonUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,8 +15,11 @@ import java.util.List;
 
 @Component
 public class AlbumJsonParser {
+    @Autowired
+    JsonUtil jsonUtil;
+
     public Album parseAlbumFromAlbumJson(String discogsReleaseId) {
-        JsonUtil jsonUtil = new JsonUtil();
+
         Album parsedAlbum = new Album();
         String response = jsonUtil.getAlbumJson(discogsReleaseId);
 
