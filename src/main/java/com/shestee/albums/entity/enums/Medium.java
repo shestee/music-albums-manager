@@ -1,0 +1,5 @@
+package com.shestee.albums.entity.enums;
+
+public enum Medium {
+    VINYL, CD, CASSETTE, FILES, OTHER;
+}
