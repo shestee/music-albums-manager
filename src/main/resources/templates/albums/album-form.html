@@ -17,29 +17,56 @@
 		<h3>Albums Directory</h3>
 		<hr>
 		
-		<p class="h4 mb-4">Save Employee</p>
+		<p class="h4 mb-4">Save Album</p>
 		
-		<form action="#" th:action="@{/employees/save}"
-						 th:object="${employee}" method="POST">
+		<form action="#" th:action="@{/add}"
+						 th:object="${album}" method="POST">
 						 
 			<!-- Add hidden form field to handle the update -->
 			<input type="hidden" th:field="*{id}"/>
 			
-			<input type="text" th:field="*{firstName}"
-					class="form-control mb-4 col-4" placeholder="First name"/>
+			<input type="text" th:field="*{artist}"
+					class="form-control mb-4 col-4" placeholder="Artist"/>
 					
-			<input type="text" th:field="*{lastName}"
-					class="form-control mb-4 col-4" placeholder="Last name"/>
-					
-			<input type="text" th:field="*{email}"
-					class="form-control mb-4 col-4" placeholder="Email"/>
-					
+			<input type="text" th:field="*{title}"
+					class="form-control mb-4 col-4" placeholder="Title"/>
+
+			<p>Medium:
+			<select name="medium">
+				<option th:each="mediumOpt : ${T(com.shestee.albums.entity.enums.Medium).values()}"
+						th:value="${mediumOpt}" th:text="${mediumOpt}" th:field="*{medium}"
+						class="form-control mb-4 col-4">
+				</option>
+			</select></p>
+
+			<p>Length type:
+			<select name="lengthType">
+				<option th:each="lengthOpt : ${T(com.shestee.albums.entity.enums.LengthType).values()}"
+						th:value="${lengthOpt}" th:text="${lengthOpt}" th:field="*{lengthType}"
+						class="form-control mb-4 col-4">
+				</option>
+			</select></p>
+
+			<input type="text" th:field="*{genre}"
+					class="form-control mb-4 col-4" placeholder="Genre"/>
+
+			<input type="text" th:field="*{label}"
+					class="form-control mb-4 col-4" placeholder="Label"/>
+
+			<input type="text" th:field="*{catalogueNumber}"
+					class="form-control mb-4 col-4" placeholder="Catalogue Number"/>
+
+			<input type="text" th:field="*{year}"
+					class="form-control mb-4 col-4" placeholder="Year"/>
+
+			<input type="hidden" th:field="*{ownId}"/>
+
 			<button type="submit" class="btn btn-info col-2">Save</button>
 			
 		</form>
 		
 		<hr>
-		<a th:href="@{/employees/list}">Back to Albums List</a>
+		<a th:href="@{/list}">Back to Albums List</a>
 	</div>
 
 </body>

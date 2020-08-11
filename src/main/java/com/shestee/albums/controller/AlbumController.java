@@ -8,10 +8,7 @@ import com.shestee.albums.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.engine.ModelBuilderTemplateHandler;
 
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.List;
 public class AlbumController {
 
     private static String discogsId;
-    private static Album album;
+    //private static Album album;
 
     @Autowired
     private AlbumJsonParser albumParser;
@@ -48,7 +45,7 @@ public class AlbumController {
         return "/albums/list-albums";
     }
 
-    @GetMapping("/show-album")
+    /*@GetMapping("/show-album")
     public String getFromDiscogs(@RequestParam("id") String id, Model theModel) {
         discogsId = id;
 
@@ -59,14 +56,16 @@ public class AlbumController {
         albumService.addAllSongsToAlbum(album.getId(), discogsId);
 
         return "albums/show-album";
-    }
+    }*/
 
-    @GetMapping("/add")
-    public String addAlbum() {
+    @PostMapping("/add")
+    public String addAlbum(@ModelAttribute("album") Album album) {
         albumService.addAlbum(album);
-        albumService.addAllSongsToAlbum(album.getId(), discogsId);
-
-        return "redirect:/albums/list";
+        /*if (discogsId != null) {
+            albumService.addAllSongsToAlbum(album.getId(), discogsId);
+        }
+*/
+        return "redirect:/list";
     }
 
     @GetMapping("/showSongs")
@@ -77,12 +76,13 @@ public class AlbumController {
 
         return "albums/show-songs";
     }
-   /* @GetMapping("/showFormForAdd")
+
+   @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
         Album album = new Album();
 
         theModel.addAttribute("album", album);
 
-        return "album-form";
-    }*/
+        return "/albums/album-form";
+    }
 }
