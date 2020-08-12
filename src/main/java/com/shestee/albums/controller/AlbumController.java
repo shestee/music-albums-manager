@@ -5,11 +5,11 @@ import com.shestee.albums.entity.Song;
 import com.shestee.albums.parsers.AlbumJsonParser;
 import com.shestee.albums.service.AlbumService;
 import com.shestee.albums.service.SongService;
+import com.shestee.albums.utils.SheetImporterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.engine.ModelBuilderTemplateHandler;
 
 import java.util.List;
 
@@ -20,10 +20,13 @@ public class AlbumController {
     //private static Album album;
 
     @Autowired
+    private SheetImporterImpl sheetImporter;
+
+    @Autowired
     private AlbumJsonParser albumParser;
 
     @Autowired
-    SongService songService;
+    private SongService songService;
 
     private AlbumService albumService;
 
@@ -71,8 +74,10 @@ public class AlbumController {
     @GetMapping("/showSongs")
     public String showSongsFromAlbum(@RequestParam("albumId") int albumId, Model theModel) {
         List<Song> songs = songService.findByAlbumId(albumId);
-
         theModel.addAttribute("songs", songs);
+
+        Album album = albumService.findById(albumId);
+        theModel.addAttribute("album", album);
 
         return "albums/show-songs";
     }
@@ -103,6 +108,14 @@ public class AlbumController {
     @GetMapping("/delete")
     public String removeAlbumById(@RequestParam("albumId") int id) {
         albumService.removeAlbum(id);
+
+        return "redirect:/list";
+    }
+
+    @GetMapping("/importFromSheet")
+    public String importFromSheet() {
+        sheetImporter.copyFromXclToDB();
+        sheetImporter.addSongsFromXCLsheet();
 
         return "redirect:/list";
     }

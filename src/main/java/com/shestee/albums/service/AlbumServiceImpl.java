@@ -80,7 +80,10 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public int getIdByOwnId(int ownId) {
-        return 0;
+        Album album = getAllAlbums().stream()
+                .filter(a -> a.getOwnId() == ownId)
+                .findFirst().get();
+        return album.getId();
     }
 
     @Override
