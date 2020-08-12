@@ -19,77 +19,82 @@ public class AlbumJsonParser {
     JsonUtil jsonUtil;
 
     public Album parseAlbumFromAlbumJson(String discogsReleaseId) {
-
+        
         Album parsedAlbum = new Album();
-        String response = jsonUtil.getAlbumJson(discogsReleaseId);
+        
+        try {
+            String response = jsonUtil.getAlbumJson(discogsReleaseId);
 
-        JSONObject jsonObject = new JSONObject(response);
-        JSONArray labels = jsonObject.getJSONArray("labels");
-        JSONArray genres = jsonObject.getJSONArray("genres");
-        JSONArray formats = jsonObject.getJSONArray("formats");
-        parsedAlbum.setArtist(jsonObject.getString("artists_sort"));
-        parsedAlbum.setTitle(jsonObject.getString("title"));
-        //parsedAlbum.setCatalogueNumber(labels.getJSONObject(0).getString("catno"));
-        String catNo = "";
-        for (int i=0; i<labels.length(); i++) {
-            if (i == labels.length()-1) {
-                catNo += labels.getJSONObject(i).getString("catno");
-            } else {
-                catNo += labels.getJSONObject(i).getString("catno") + ", ";
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray labels = jsonObject.getJSONArray("labels");
+            JSONArray genres = jsonObject.getJSONArray("genres");
+            JSONArray formats = jsonObject.getJSONArray("formats");
+            parsedAlbum.setArtist(jsonObject.getString("artists_sort"));
+            parsedAlbum.setTitle(jsonObject.getString("title"));
+            //parsedAlbum.setCatalogueNumber(labels.getJSONObject(0).getString("catno"));
+            String catNo = "";
+            for (int i=0; i<labels.length(); i++) {
+                if (i == labels.length()-1) {
+                    catNo += labels.getJSONObject(i).getString("catno");
+                } else {
+                    catNo += labels.getJSONObject(i).getString("catno") + ", ";
+                }
             }
-        }
-        parsedAlbum.setCatalogueNumber(catNo);
+            parsedAlbum.setCatalogueNumber(catNo);
 
-        String genreStr = "";
-        for (int i = 0; i < genres.length() ; i++) {
-            if (i == genres.length()-1) {
-                genreStr += genres.getString(i);
-            } else {
-                genreStr += genres.getString(i) + ", ";
+            String genreStr = "";
+            for (int i = 0; i < genres.length() ; i++) {
+                if (i == genres.length()-1) {
+                    genreStr += genres.getString(i);
+                } else {
+                    genreStr += genres.getString(i) + ", ";
+                }
             }
-        }
 
-        parsedAlbum.setGenre(genreStr);
-        parsedAlbum.setLabel(labels.getJSONObject(0).getString("name"));
-        String lenghtype = formats.getJSONObject(0).getJSONArray("descriptions").get(0).toString();
-        switch (lenghtype) {
-            case "LP":
-            case "Album":
-                parsedAlbum.setLengthType(LengthType.LP);
-                break;
-            case "Single":
-                parsedAlbum.setLengthType(LengthType.SINGLE);
-                break;
-            case "EP":
-                parsedAlbum.setLengthType(LengthType.EP);
-                break;
-            default:
-                parsedAlbum.setLengthType(LengthType.OTHER);
-                break;
-        }
-        parsedAlbum.setLengthType(LengthType.LP);
-        String medium = formats.getJSONObject(0).getString("name");
-        switch (medium) {
-            case "Vinyl":
-                parsedAlbum.setMedium(Medium.VINYL);
-                break;
-            case "Cassette":
-                parsedAlbum.setMedium(Medium.CASSETTE);
-                break;
-            case "CD":
-                parsedAlbum.setMedium(Medium.CD);
-                break;
-            default:
-                parsedAlbum.setMedium(Medium.OTHER);
-                break;
+            parsedAlbum.setGenre(genreStr);
+            parsedAlbum.setLabel(labels.getJSONObject(0).getString("name"));
+            String lenghtype = formats.getJSONObject(0).getJSONArray("descriptions").get(0).toString();
+            switch (lenghtype) {
+                case "LP":
+                case "Album":
+                    parsedAlbum.setLengthType(LengthType.LP);
+                    break;
+                case "Single":
+                    parsedAlbum.setLengthType(LengthType.SINGLE);
+                    break;
+                case "EP":
+                    parsedAlbum.setLengthType(LengthType.EP);
+                    break;
+                default:
+                    parsedAlbum.setLengthType(LengthType.OTHER);
+                    break;
+            }
+            parsedAlbum.setLengthType(LengthType.LP);
+            String medium = formats.getJSONObject(0).getString("name");
+            switch (medium) {
+                case "Vinyl":
+                    parsedAlbum.setMedium(Medium.VINYL);
+                    break;
+                case "Cassette":
+                    parsedAlbum.setMedium(Medium.CASSETTE);
+                    break;
+                case "CD":
+                    parsedAlbum.setMedium(Medium.CD);
+                    break;
+                default:
+                    parsedAlbum.setMedium(Medium.OTHER);
+                    break;
 
+            }
+            parsedAlbum.setYear(jsonObject.getInt("year"));
+        } catch (org.json.JSONException exc) {
+            System.out.println("Something went wrong: " + exc.getMessage());
         }
-        parsedAlbum.setYear(jsonObject.getInt("year"));
 
         return parsedAlbum;
     }
 
-    public static List<Song> parseSongsfromAlbumJson(String response) {
+    public static List<Song> parseSongsFromAlbumJson(String response) {
         List<Song> parsedSongs = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(response);

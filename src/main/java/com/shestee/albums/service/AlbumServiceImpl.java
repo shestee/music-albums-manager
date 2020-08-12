@@ -95,7 +95,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void addAllSongsToAlbum(int albumId, String releaseID) {
-        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseID));
+        List<Song> songs = AlbumJsonParser.parseSongsFromAlbumJson(jsonUtil.getAlbumJson(releaseID));
         for (Song song : songs) {
             song.setAlbumId(albumId);
             songService.addSong(song);
@@ -104,7 +104,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void addAllSongsToLastAlbum(String releaseId) {
-        List<Song> songs = AlbumJsonParser.parseSongsfromAlbumJson(jsonUtil.getAlbumJson(releaseId));
+        List<Song> songs = AlbumJsonParser.parseSongsFromAlbumJson(jsonUtil.getAlbumJson(releaseId));
         for (Song song : songs) {
             song.setAlbumId(albumRepository.findTopByOrderByIdDesc().getId());
             songService.addSong(song);

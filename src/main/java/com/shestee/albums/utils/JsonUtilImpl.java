@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
 
 @Component
 public class JsonUtilImpl implements JsonUtil {
-    public String getAlbumJson(String releaseId) {
+    public String getAlbumJson(String releaseId) throws org.json.JSONException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.discogs.com/releases/" + releaseId))
