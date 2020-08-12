@@ -30,5 +30,7 @@ public interface SongService {
 
     void viewSongInfoById(int id);
 
+    void removeAllSongsFromAlbum(int albumId);
+
     //public List<Song> findSongsByArtist(String artist);
 }

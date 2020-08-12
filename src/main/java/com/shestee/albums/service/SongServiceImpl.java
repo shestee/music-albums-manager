@@ -82,4 +82,13 @@ public class SongServiceImpl implements SongService {
     public void viewSongInfoById(int id) {
 
     }
+
+    @Override
+    public void removeAllSongsFromAlbum(int albumId) {
+        List<Song> songsToRemove = findByAlbumId(albumId);
+
+        for (Song song : songsToRemove) {
+            songRepository.delete(song);
+        }
+    }
 }

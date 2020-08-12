@@ -90,6 +90,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public void removeAlbum(int id) {
+        songService.removeAllSongsFromAlbum(id);
         albumRepository.deleteById(id);
     }
 
