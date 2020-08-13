@@ -48,19 +48,6 @@ public class AlbumController {
         return "/albums/list-albums";
     }
 
-    /*@GetMapping("/show-album")
-    public String getFromDiscogs(@RequestParam("id") String id, Model theModel) {
-        discogsId = id;
-
-        album = albumParser.parseAlbumFromAlbumJson(id);
-
-        theModel.addAttribute("album", album);
-        albumService.addAlbum(album);
-        albumService.addAllSongsToAlbum(album.getId(), discogsId);
-
-        return "albums/show-album";
-    }*/
-
     @PostMapping("/add")
     public String addAlbum(@ModelAttribute("album") Album album) {
         albumService.addAlbum(album);
@@ -95,12 +82,9 @@ public class AlbumController {
     public String showFormForAddDataFromDiscogs(@RequestParam("discogsId") String discogsId, Model theModel) {
         this.discogsId = discogsId;
 
-        // ten album poniżej ma być sparsowany z discogsa
         Album album = albumParser.parseAlbumFromAlbumJson(discogsId);
 
         theModel.addAttribute("album", album);
-        /*albumService.addAlbum(album);
-        albumService.addAllSongsToLastAlbum(discogsId);*/
 
         return "/albums/album-form";
     }
