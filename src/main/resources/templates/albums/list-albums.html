@@ -17,19 +17,19 @@
 <div class="container">
 	<h3>Album Directory</h3>
 	<hr>
-	
+
 	<!-- Add a button -->
 	<a th:href="@{/showFormForAdd}"
 		class="btn btn-primary btn-small mb-3">
 		Add Album
 	</a>
 	
-	<table class="table table-bordered table-striped">
+	<table class="table table-bordered table-striped" style="width:100%">
 		<thead class="thead-dark">
 			<tr>
-				<th width="10">Id</th>
-				<th width="200">Artist</th>
-				<th width="200">Title</th>
+				<th>No.</th>
+				<th>Artist</th>
+				<th>Title</th>
 				<th>Genre</th>
 				<th>Medium</th>
 				<th>Cat. No.</th>
@@ -40,8 +40,8 @@
 		
 		<tbody>
 			<!-- Thymeleaf expression for looping over data (here: list of employees) -->
-			<tr th:each="tempAlbum : ${albums}">
-				<td th:text="${tempAlbum.id}"/>
+			<tr th:each="tempAlbum, stats : ${albums}">
+				<td th:text="${stats.index+1}"/>
 				<td th:text="${tempAlbum.artist}"/>
 				<td><a th:href="@{/showSongs(albumId=${tempAlbum.id})}" th:text="${tempAlbum.title}" /></td>
 				<td th:text="${tempAlbum.genre}"/>

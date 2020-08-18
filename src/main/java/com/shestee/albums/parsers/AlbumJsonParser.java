@@ -69,7 +69,7 @@ public class AlbumJsonParser {
                     parsedAlbum.setLengthType(LengthType.OTHER);
                     break;
             }
-            parsedAlbum.setLengthType(LengthType.LP);
+            // parsedAlbum.setLengthType(LengthType.LP);
             String medium = formats.getJSONObject(0).getString("name");
             switch (medium) {
                 case "Vinyl":
