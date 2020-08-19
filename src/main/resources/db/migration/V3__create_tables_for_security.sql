@@ -1,12 +1,31 @@
-create table users(
-    username varchar_ignorecase(50) not null primary key,
-    password varchar_ignorecase(50) not null,
-    enabled boolean not null
+CREATE TABLE users (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  username varchar(50) NOT NULL,
+  password char(80) NOT NULL,
+  PRIMARY KEY (id)
 );
 
-create table authorities (
-    username varchar_ignorecase(50) not null,
-    authority varchar_ignorecase(50) not null,
-    constraint fk_authorities_users foreign key(username) references users(username)
+
+CREATE TABLE roles (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) DEFAULT NULL,
+  PRIMARY KEY (id)
 );
-create unique index ix_auth_username on authorities (username,authority);
+
+
+CREATE TABLE users_roles (
+  user_id int(11) NOT NULL,
+  role_id int(11) NOT NULL,
+
+  PRIMARY KEY (user_id,role_id),
+
+  CONSTRAINT FK_USER_05 FOREIGN KEY (user_id)
+  REFERENCES users (id)
+  ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+  CONSTRAINT FK_ROLE FOREIGN KEY (role_id)
+  REFERENCES roles (id)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+SET FOREIGN_KEY_CHECKS = 1;

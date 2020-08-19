@@ -1,16 +1,15 @@
-insert into users (username, password, enabled)
-    values ('user',
-        '{noop}pass',
-        true);
-
-insert into users (username, password, enabled)
-    values ('admin',
-        '{noop}pass',
-        true);
+INSERT INTO users (username,password) VALUES
+('john','pass'),
+('mary','pass'),
+('susan','pass');
 
 
-insert into authorities (username, authority)
-    values ('user', 'ROLE_USER');
+INSERT INTO roles (name) VALUES
+('ROLE_USER'),('ROLE_ADMIN');
 
-insert into authorities (username, authority)
-    values ('admin', 'ROLE_ADMIN');
+
+INSERT INTO users_roles (user_id,role_id)
+VALUES
+(1, 1),
+(2, 1),
+(3, 2);
