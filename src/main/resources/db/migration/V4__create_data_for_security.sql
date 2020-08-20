@@ -1,7 +1,7 @@
-INSERT INTO users (username,password) VALUES
-('john','pass'),
-('mary','pass'),
-('susan','pass');
+INSERT INTO users (username,password,enabled) VALUES
+('john','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
+('mary','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
+('susan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1);
 
 
 INSERT INTO roles (name) VALUES
