@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -21,12 +23,20 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserService userService;
 
 	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+	@Autowired
     DataSource dataSource;
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	//Enable jdbc authentication
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
+        auth.authenticationProvider(authenticationProvider());
     }
 
 	/*
@@ -42,6 +52,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin().
 					loginPage("/showMyLoginPage")
 					.loginProcessingUrl("/authenticateTheUser")
+					.successHandler(customAuthenticationSuccessHandler)
 					.permitAll()
 				.and()
 				.logout().permitAll()
@@ -55,13 +66,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userService); //set the custom user details service
+		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
-	//@Autowired
-	//public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
-	//	authenticationMgr.inMemoryAuthentication().withUser("admin").password("admin").authorities("ROLE_USER").and()
-	//			.withUser("javainuse").password("javainuse").authorities("ROLE_USER", "ROLE_ADMIN");
-	//}
-
-
 }

@@ -15,11 +15,11 @@ public class UserRegistrationDto {
     private String username;
 
     @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
+    @Size(min = 8, message = "is required")
     private String password;
 
     @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
+    @Size(min = 8, message = "is required")
     private String matchingPassword;
 
     public UserRegistrationDto() {

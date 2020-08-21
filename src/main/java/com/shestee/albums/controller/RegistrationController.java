@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
@@ -30,35 +34,37 @@ public class RegistrationController {
 
     @GetMapping("/showRegistrationForm")
     public String showRegistrationForm(Model theModel) {
-        theModel.addAttribute("userDto", new UserRegistrationDto());
+        UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
+
+        theModel.addAttribute("userRegistrationDto", userRegistrationDto);
 
         return "albums/registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
-            @Valid @ModelAttribute("userDto") UserRegistrationDto theUserDto,
-            BindingResult theBindingResult,
-            Model theModel) {
+                 @Valid @ModelAttribute("userRegistrationDto") UserRegistrationDto userRegistrationDto,
+                 BindingResult theBindingResult,
+                 Model theModel) {
 
-        String username = theUserDto.getUsername();
+        String username = userRegistrationDto.getUsername();
 
         // form validation
         if (theBindingResult.hasErrors()){
-            return "registration-form";
+            return "albums/registration-form";
         }
 
         // check the database if user already exists
         User existing = userService.findByUsername(username);
         if (existing != null){
-            theModel.addAttribute("userDto", new UserRegistrationDto());
+            theModel.addAttribute("userRegistrationDto", new UserRegistrationDto());
             theModel.addAttribute("registrationError", "User name already exists.");
 
-            return "registration-form";
+            return "albums/registration-form";
         }
 
         // create user account
-        userService.saveUser(theUserDto);
+        userService.saveUser(userRegistrationDto);
 
         return "albums/registration-confirmation";
     }

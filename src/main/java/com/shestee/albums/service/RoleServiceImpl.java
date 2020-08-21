@@ -3,7 +3,9 @@ package com.shestee.albums.service;
 import com.shestee.albums.dao.RoleRepository;
 import com.shestee.albums.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     RoleRepository roleRepository;

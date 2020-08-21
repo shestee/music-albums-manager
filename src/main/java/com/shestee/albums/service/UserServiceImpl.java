@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    RoleService roleService;
 
     private UserRepository userRepository;
 
@@ -33,20 +40,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void saveUser(UserRegistrationDto userDto) {
         User user = new User();
 
         // assign user details to the user object
         user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        // give user default role of "employee"
-        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        // give user default role of "user"
+        user.setRoles(Arrays.asList(roleService.findRoleByName("ROLE_USER")));
 
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(userName);
         if (user == null) {
