@@ -22,5 +22,10 @@ public class LoginController {
 		return "albums/access-denied";
 		
 	}
+
+	@GetMapping("/username")
+	public String showUsername() {
+		return "albums/username";
+	}
 	
 }

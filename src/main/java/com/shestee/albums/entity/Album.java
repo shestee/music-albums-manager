@@ -39,6 +39,9 @@ public class Album {
     @Column(name = "own_id")
     private int ownId;
 
+    @Column(name = "user_id")
+    private int userId;
+
     //add getting data with foreign key; added also getters and setters
     @OneToMany(mappedBy = "albums")
     private Set<Album> albums;
@@ -49,7 +52,7 @@ public class Album {
     }
 
     public Album(int id, String artist, String albumTitle, Medium medium, LengthType lengthType,
-                 String genre, String label, String catalogueNumber, int year, int ownId) {
+                 String genre, String label, String catalogueNumber, int year, int ownId,int userId) {
         this.id = id;
         this.artist = artist;
         this.title = albumTitle;
@@ -60,6 +63,7 @@ public class Album {
         this.catalogueNumber = catalogueNumber;
         this.year = year;
         this.ownId = ownId;
+        this.userId = userId;
     }
 
     public Album(String artist, String albumTitle, Medium medium, LengthType lengthType,
@@ -178,6 +182,14 @@ public class Album {
         return this;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Album{" +
@@ -191,6 +203,8 @@ public class Album {
                 ", catalogueNumber='" + catalogueNumber + '\'' +
                 ", year=" + year +
                 ", ownId=" + ownId +
+                ", userName='" + userId + '\'' +
+                ", albums=" + albums +
                 '}';
     }
 }

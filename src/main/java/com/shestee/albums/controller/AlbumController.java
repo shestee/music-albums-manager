@@ -1,10 +1,13 @@
 package com.shestee.albums.controller;
 
+import com.shestee.albums.config.AuthenticationFacade;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
+import com.shestee.albums.entity.User;
 import com.shestee.albums.parsers.AlbumJsonParser;
 import com.shestee.albums.service.AlbumService;
 import com.shestee.albums.service.SongService;
+import com.shestee.albums.service.UserService;
 import com.shestee.albums.utils.SheetImporterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,12 @@ import java.util.List;
 
 @Controller
 public class AlbumController {
+
+    @Autowired
+    AuthenticationFacade authenticationFacade;
+
+    @Autowired
+    UserService userService;
 
     private String discogsId;
     //private static Album album;
@@ -38,8 +47,9 @@ public class AlbumController {
     @GetMapping("/list")
     public String listAlbums(Model theModel, Model theModel2) {
 
-        List<Album> albums = albumService.getAllAlbums();
         Album album = new Album();
+
+        List<Album> albums = albumService.getUsersAlbums();
 
         theModel2.addAttribute("album", album);
 
@@ -50,6 +60,9 @@ public class AlbumController {
 
     @PostMapping("/add")
     public String addAlbum(@ModelAttribute("album") Album album) {
+        User user = userService.findByUsername(authenticationFacade.getAuthentication().getName());
+        album.setUserId(user.getId());
+
         albumService.addAlbum(album);
         if (discogsId != null) {
             albumService.addAllSongsToLastAlbum(discogsId);

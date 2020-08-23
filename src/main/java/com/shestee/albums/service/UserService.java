@@ -1,6 +1,7 @@
 package com.shestee.albums.service;
 
 import com.shestee.albums.dto.UserRegistrationDto;
+import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

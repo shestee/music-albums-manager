@@ -2,6 +2,7 @@ package com.shestee.albums.service;
 
 import com.shestee.albums.dao.UserRepository;
 import com.shestee.albums.dto.UserRegistrationDto;
+import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Role;
 import com.shestee.albums.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

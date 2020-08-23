@@ -1,8 +1,10 @@
 package com.shestee.albums.service;
 
+import com.shestee.albums.config.AuthenticationFacade;
 import com.shestee.albums.dao.AlbumRepository;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
+import com.shestee.albums.entity.User;
 import com.shestee.albums.entity.enums.LengthType;
 import com.shestee.albums.entity.enums.Medium;
 import com.shestee.albums.parsers.AlbumJsonParser;
@@ -16,7 +18,13 @@ import java.util.List;
 public class AlbumServiceImpl implements AlbumService {
 
     @Autowired
+    AuthenticationFacade authenticationFacade;
+
+    @Autowired
     JsonUtil jsonUtil;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     SongService songService;
@@ -31,6 +39,14 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<Album> getAllAlbums() {
         return albumRepository.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public List<Album> getUsersAlbums() {
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return user.getAlbums();
     }
 
     @Override

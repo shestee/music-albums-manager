@@ -8,5 +8,9 @@ create table albums (
 	label varchar(100) not null,
 	catalogue varchar(30) not null,
 	year int(11) not null,
-	own_id int(11) not null default -1
+	own_id int(11) not null default -1,
+	user_id int(11) default null,
+
+	constraint fk_user foreign key (user_id)
+	references users (id)
 );

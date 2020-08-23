@@ -10,6 +10,8 @@ import java.util.List;
 public interface AlbumService {
     List<Album> getAllAlbums();
 
+    List<Album> getUsersAlbums();
+
     List<Album> findByArtist(String artist);
 
     Album findById(int id);
