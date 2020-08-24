@@ -5,6 +5,8 @@ import com.shestee.albums.entity.enums.Medium;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,10 +44,9 @@ public class Album {
     @Column(name = "user_id")
     private int userId;
 
-    //add getting data with foreign key; added also getters and setters
-    @OneToMany(mappedBy = "albums")
-    private Set<Album> albums;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "album_id")
+    private List<Song> songs;
 
     public Album() {
 
@@ -173,13 +174,19 @@ public class Album {
         return this;
     }
 
-    public Set<Album> getAlbums() {
-        return albums;
+    public List<Song> getSongs() {
+        return songs;
     }
 
-    public Album setAlbums(Set<Album> albums) {
-        this.albums = albums;
-        return this;
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public void addSong(Song song) {
+        if (songs == null) {
+            songs = new ArrayList<>();
+        }
+        songs.add(song);
     }
 
     public int getUserId() {
@@ -203,8 +210,7 @@ public class Album {
                 ", catalogueNumber='" + catalogueNumber + '\'' +
                 ", year=" + year +
                 ", ownId=" + ownId +
-                ", userName='" + userId + '\'' +
-                ", albums=" + albums +
+                ", userId=" + userId +
                 '}';
     }
 }

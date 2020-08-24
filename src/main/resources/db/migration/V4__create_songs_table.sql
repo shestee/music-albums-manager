@@ -5,5 +5,6 @@ create table songs (
 	music varchar(100),
 	lyrics varchar(100),
 	album_id int not null,
-    foreign key (album_id) references albums(id)
+    constraint fk_album foreign key (album_id)
+    references albums(id)
 );
