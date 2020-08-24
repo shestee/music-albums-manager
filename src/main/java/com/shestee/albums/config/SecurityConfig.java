@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserService userService;
@@ -46,11 +46,12 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").hasAnyRole("USER", "ADMIN")
+		http.authorizeRequests().antMatchers("/").permitAll()
+				.antMatchers("/list").hasAnyRole("USER", "ADMIN")
 				.antMatchers("/resources/**").permitAll()
 				.and()
 				.formLogin().
-					loginPage("/showMyLoginPage")
+					loginPage("/login")
 					.loginProcessingUrl("/authenticateTheUser")
 					.successHandler(customAuthenticationSuccessHandler)
 					.permitAll()

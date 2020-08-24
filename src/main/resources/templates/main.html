@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+/* Style the body */
+body {
+  font-family: Arial;
+
+  margin: 0;
+}
+
+/* Header/Logo Title */
+.header {
+  padding: 60px;
+  text-align: left;
+  background: #0b0326;
+  color: orange;
+  font-size: 60px;
+  font-weight: bold
+}
+
+/* Page Content */
+.content {
+	padding:20px;
+	font-size: 45;
+	background: #b0cfb3;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Music Albums Manager</h1>
+</div>
+
+    <div class="content">
+        <a th:href="@{/login}">Login</a>
+        <br><br>
+        <a th:href="@{/register/showRegistrationForm}">Register new User</a>
+    </div>
+
+</body>
+</html>
