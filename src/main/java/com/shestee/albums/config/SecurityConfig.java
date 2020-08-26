@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").permitAll()
-				.antMatchers("/list").hasAnyRole("USER", "ADMIN")
+				.antMatchers("/list").hasRole("USER")
+				.antMatchers("/importFromSheet").hasRole("USER")
 				.antMatchers("/resources/**").permitAll()
 				.and()
 				.formLogin().
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling().accessDeniedPage("/acces-denied");
 
-		http.csrf().disable();
+		//http.csrf().disable();
 	}
 
 	@Bean

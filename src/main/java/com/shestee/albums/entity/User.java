@@ -78,6 +78,13 @@ public class User {
         this.albums = albums;
     }
 
+    public void addAlbum(Album album) {
+        if (albums == null) {
+            albums = new ArrayList<>();
+        }
+        albums.add(album);
+    }
+
     public boolean isEnabled() {
         return enabled;
     }

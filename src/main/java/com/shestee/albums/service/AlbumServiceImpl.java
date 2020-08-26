@@ -95,9 +95,9 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public int getIdByOwnId(int ownId) {
+    public int getIdBysheetAlbumId(int sheetAlbumId) {
         Album album = getAllAlbums().stream()
-                .filter(a -> a.getOwnId() == ownId)
+                .filter(a -> a.getSheetAlbumId() == sheetAlbumId)
                 .findFirst().get();
         return album.getId();
     }

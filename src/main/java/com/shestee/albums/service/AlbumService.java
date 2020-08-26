@@ -30,7 +30,7 @@ public interface AlbumService {
 
     void addAlbum(Album album);
 
-    int getIdByOwnId(int ownId);
+    int getIdBysheetAlbumId(int sheetAlbumId);
 
     List<Song> getSongsFromAlbum(int id);
 

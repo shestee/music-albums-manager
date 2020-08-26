@@ -21,7 +21,7 @@
 			Save Album
 
 		<form th:action="@{/showFormForAddDataFromDiscogs(discogsId=${id})}">
-			<input name="discogsId" type="text" th:value="*{discogsId}">
+			<input name="discogsId" type="text" th:value="*{discogsId}" placeholder="Discogs release ID (optional)">
 			<button type="submit" class="btn btn-info col-2">Submit</button>
 		</form>
 
@@ -67,7 +67,7 @@
 			<input type="text" th:field="*{year}"
 					class="form-control mb-4 col-4" placeholder="Year"/>
 
-			<input type="hidden" th:field="*{ownId}"/>
+			<input type="hidden" th:field="*{sheetAlbumId}"/>
 
 			<button type="submit" class="btn btn-info col-2">Save</button>
 			

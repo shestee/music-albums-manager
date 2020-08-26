@@ -19,13 +19,11 @@ public class Song {
     private String music;
     private String lyrics;
 
+    @Column(name = "sheet_album_id")
+    private int sheetAlbumId;
+
     @Column(name = "album_id")
     private int albumId;
-
-    //add getting data with foreign key; also added getters and setters;
-    @ManyToOne
-    @JoinColumn(name = "album_id", nullable = false, insertable = false, updatable = false)
-    private Album album;
 
     public Song() {
     }
@@ -35,12 +33,30 @@ public class Song {
         this.title = title;
     }
 
-    public Song(int id, String trackNumber, String title, String music, String lyrics, int albumId) {
+/*    public Song(int id, String trackNumber, String title, String music, String lyrics, int albumId) {
         this.id = id;
         this.trackNumber = trackNumber;
         this.title = title;
         this.music = music;
         this.lyrics = lyrics;
+        this.albumId = albumId;
+    }*/
+
+    public Song(String trackNumber, String title, String music, String lyrics, int albumId) {
+        this.trackNumber = trackNumber;
+        this.title = title;
+        this.music = music;
+        this.lyrics = lyrics;
+        this.albumId = albumId;
+    }
+
+    // constructor for sheet importer
+    public Song(String trackNumber, String title, String music, String lyrics, int sheetAlbumId, int albumId) {
+        this.trackNumber = trackNumber;
+        this.title = title;
+        this.music = music;
+        this.lyrics = lyrics;
+        this.sheetAlbumId = sheetAlbumId;
         this.albumId = albumId;
     }
 
@@ -89,21 +105,20 @@ public class Song {
         return this;
     }
 
+    public int getSheetAlbumId() {
+        return sheetAlbumId;
+    }
+
+    public void setSheetAlbumId(int sheetAlbumId) {
+        this.sheetAlbumId = sheetAlbumId;
+    }
+
     public int getAlbumId() {
         return albumId;
     }
 
     public Song setAlbumId(int albumId) {
         this.albumId = albumId;
-        return this;
-    }
-
-    public Album getAlbum() {
-        return album;
-    }
-
-    public Song setAlbum(Album album) {
-        this.album = album;
         return this;
     }
 

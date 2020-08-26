@@ -1,6 +1,7 @@
 package com.shestee.albums.controller;
 
 import com.shestee.albums.config.AuthenticationFacade;
+import com.shestee.albums.dao.UserRepository;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import com.shestee.albums.entity.User;
@@ -14,10 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AlbumController {
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AuthenticationFacade authenticationFacade;
@@ -111,8 +117,22 @@ public class AlbumController {
 
     @GetMapping("/importFromSheet")
     public String importFromSheet() {
-        sheetImporter.copyFromXclToDB();
-        sheetImporter.addSongsFromXCLsheet();
+        List<Album> albums = sheetImporter.copyFromXclToDB();
+        List<Song> songs = sheetImporter.addSongsFromXCLsheet();
+
+        User user = userService.findByUsername(authenticationFacade.getAuthentication().getName());
+
+        for (Album album : albums) {
+            album.setUserId(user.getId());
+            albumService.addAlbum(album);
+
+            int sheetAlbumId = album.getSheetAlbumId();
+
+            songs.stream()
+                 .filter(song -> song.getSheetAlbumId() == sheetAlbumId)
+                 .map(song -> song.setAlbumId(albumService.getIdBysheetAlbumId(sheetAlbumId)))
+                 .forEach(song -> songService.addSong(song));
+        }
 
         return "redirect:/list";
     }

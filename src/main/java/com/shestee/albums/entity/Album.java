@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "albums")
@@ -39,7 +38,7 @@ public class Album {
     private int year;
 
     @Column(name = "own_id")
-    private int ownId;
+    private int sheetAlbumId;
 
     @Column(name = "user_id")
     private int userId;
@@ -53,7 +52,7 @@ public class Album {
     }
 
     public Album(int id, String artist, String albumTitle, Medium medium, LengthType lengthType,
-                 String genre, String label, String catalogueNumber, int year, int ownId,int userId) {
+                 String genre, String label, String catalogueNumber, int year, int sheetAlbumId, int userId) {
         this.id = id;
         this.artist = artist;
         this.title = albumTitle;
@@ -63,12 +62,12 @@ public class Album {
         this.label = label;
         this.catalogueNumber = catalogueNumber;
         this.year = year;
-        this.ownId = ownId;
+        this.sheetAlbumId = sheetAlbumId;
         this.userId = userId;
     }
 
     public Album(String artist, String albumTitle, Medium medium, LengthType lengthType,
-                 String genre, String label, String catalogueNumber, int year) {
+                 String genre, String label, String catalogueNumber, int year, int sheetAlbumId, int userId) {
         this.artist = artist;
         this.title = albumTitle;
         this.medium = medium;
@@ -77,6 +76,8 @@ public class Album {
         this.label = label;
         this.catalogueNumber = catalogueNumber;
         this.year = year;
+        this.sheetAlbumId = sheetAlbumId;
+        this.userId = userId;
     }
 
     public Album(int id) {
@@ -165,12 +166,12 @@ public class Album {
         return this;
     }
 
-    public int getOwnId() {
-        return ownId;
+    public int getSheetAlbumId() {
+        return sheetAlbumId;
     }
 
-    public Album setOwnId(int ownId) {
-        this.ownId = ownId;
+    public Album setSheetAlbumId(int sheetAlbumId) {
+        this.sheetAlbumId = sheetAlbumId;
         return this;
     }
 
@@ -209,7 +210,7 @@ public class Album {
                 ", label='" + label + '\'' +
                 ", catalogueNumber='" + catalogueNumber + '\'' +
                 ", year=" + year +
-                ", ownId=" + ownId +
+                ", sheetAlbumId=" + sheetAlbumId +
                 ", userId=" + userId +
                 '}';
     }
