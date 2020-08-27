@@ -58,6 +58,7 @@ public class SheetImporterImpl implements SheetImporter {
         String label = "";
         String catalogue = "";
         int year = 0;
+        String info = "imp. from file";
         int sheetAlbumId = 0;
         int userId;
 
@@ -124,7 +125,7 @@ public class SheetImporterImpl implements SheetImporter {
                 }
 
                 userId = user.getId();
-                albums.add(new Album(artist, title, medium, lengthType, genre, label, catalogue, year, sheetAlbumId, userId));
+                albums.add(new Album(artist, title, medium, lengthType, genre, label, catalogue, year, info, sheetAlbumId, userId));
             }
 
             workbook.close();
@@ -148,7 +149,7 @@ public class SheetImporterImpl implements SheetImporter {
         String title = "";
         String music = "";
         String lyrics = "";
-        int shettAlbumId = 0;
+        int sheetAlbumId = 0;
 
         try {
             long start = System.currentTimeMillis();
@@ -175,7 +176,7 @@ public class SheetImporterImpl implements SheetImporter {
 
                     switch (columnIndex) {
                         case 0:
-                            shettAlbumId = (int) nextCell.getNumericCellValue();
+                            sheetAlbumId = (int) nextCell.getNumericCellValue();
                             break;
                         case 1:
                             trackNumber = nextCell.getStringCellValue();
@@ -191,7 +192,7 @@ public class SheetImporterImpl implements SheetImporter {
                             break;
                     }
                 }
-                songs.add(new Song(trackNumber, title, music, lyrics, shettAlbumId, 0));
+                songs.add(new Song(trackNumber, title, music, lyrics, sheetAlbumId, 0));
             }
 
             workbook.close();

@@ -37,6 +37,8 @@ public class Album {
     @Column(name = "year")
     private int year;
 
+    private String info;
+
     @Column(name = "own_id")
     private int sheetAlbumId;
 
@@ -52,7 +54,7 @@ public class Album {
     }
 
     public Album(int id, String artist, String albumTitle, Medium medium, LengthType lengthType,
-                 String genre, String label, String catalogueNumber, int year, int sheetAlbumId, int userId) {
+                 String genre, String label, String catalogueNumber, int year, String info, int sheetAlbumId, int userId) {
         this.id = id;
         this.artist = artist;
         this.title = albumTitle;
@@ -62,12 +64,13 @@ public class Album {
         this.label = label;
         this.catalogueNumber = catalogueNumber;
         this.year = year;
+        this.info = info;
         this.sheetAlbumId = sheetAlbumId;
         this.userId = userId;
     }
 
     public Album(String artist, String albumTitle, Medium medium, LengthType lengthType,
-                 String genre, String label, String catalogueNumber, int year, int sheetAlbumId, int userId) {
+                 String genre, String label, String catalogueNumber, int year, String info, int sheetAlbumId, int userId) {
         this.artist = artist;
         this.title = albumTitle;
         this.medium = medium;
@@ -76,6 +79,7 @@ public class Album {
         this.label = label;
         this.catalogueNumber = catalogueNumber;
         this.year = year;
+        this.info = info;
         this.sheetAlbumId = sheetAlbumId;
         this.userId = userId;
     }
@@ -166,6 +170,14 @@ public class Album {
         return this;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public int getSheetAlbumId() {
         return sheetAlbumId;
     }
@@ -210,6 +222,7 @@ public class Album {
                 ", label='" + label + '\'' +
                 ", catalogueNumber='" + catalogueNumber + '\'' +
                 ", year=" + year +
+                ", info=" + info +
                 ", sheetAlbumId=" + sheetAlbumId +
                 ", userId=" + userId +
                 '}';
