@@ -1,14 +1,11 @@
 package com.shestee.albums.utils;
 
 import com.shestee.albums.config.AuthenticationFacade;
-import com.shestee.albums.dao.UserRepository;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import com.shestee.albums.entity.User;
 import com.shestee.albums.entity.enums.LengthType;
 import com.shestee.albums.entity.enums.Medium;
-import com.shestee.albums.service.AlbumService;
-import com.shestee.albums.service.AlbumServiceImpl;
 
 import com.shestee.albums.service.UserService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,8 +15,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.sql.*;
 
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -38,14 +33,7 @@ public class SheetImporterImpl implements SheetImporter {
 
     private static String filename = "src/main/resources/sheet/plyty.xlsx";
 
-    private AlbumService albumService;
-
-    @Autowired
-    public SheetImporterImpl(AlbumService albumService) {
-        this.albumService = albumService;
-    }
-
-    public List<Album> copyFromXclToDB() {
+    public List<Album> getAlbumsFromXclSheet() {
         User user = userService.findByUsername(authenticationFacade.getAuthentication().getName());
 
         List<Album> albums = new ArrayList<>();
@@ -76,7 +64,6 @@ public class SheetImporterImpl implements SheetImporter {
 
             while (rowIterator.hasNext()) {
                 Row nextRow = rowIterator.next();
-                //Iterator<Cell> cellIterator = nextRow.cellIterator();  --------niepotrzebne w tym układzie
 
                 for (int i=0; i<firstSheet.getLastRowNum(); i++) {
 
@@ -142,7 +129,7 @@ public class SheetImporterImpl implements SheetImporter {
     }
 
 
-    public List<Song> addSongsFromXCLsheet() {
+    public List<Song> getSongsFromXclSheet() {
         List<Song> songs = new ArrayList<>();
 
         String trackNumber = "";
@@ -165,7 +152,6 @@ public class SheetImporterImpl implements SheetImporter {
 
             while (rowIterator.hasNext()) {
                 Row nextRow = rowIterator.next();
-                //Iterator<Cell> cellIterator = nextRow.cellIterator();  --------niepotrzebne w tym układzie
 
                 for (int i=0; i<firstSheet.getLastRowNum(); i++) {
 

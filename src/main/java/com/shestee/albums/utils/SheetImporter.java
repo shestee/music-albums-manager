@@ -6,6 +6,6 @@ import com.shestee.albums.entity.Song;
 import java.util.List;
 
 public interface SheetImporter {
-    List<Album> copyFromXclToDB();
-    List<Song> addSongsFromXCLsheet();
+    List<Album> getAlbumsFromXclSheet();
+    List<Song> getSongsFromXclSheet();
 }

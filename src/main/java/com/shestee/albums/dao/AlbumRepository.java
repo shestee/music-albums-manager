@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface AlbumRepository extends JpaRepository<Album, Integer> {
 
-    // no need to write any code, it works just like this
-
     Album findTopByOrderByIdDesc();
 
     List<Album> findAllByOrderByIdDesc();

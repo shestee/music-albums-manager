@@ -31,7 +31,7 @@ public class AlbumJsonParser {
             JSONArray formats = jsonObject.getJSONArray("formats");
             parsedAlbum.setArtist(jsonObject.getString("artists_sort"));
             parsedAlbum.setTitle(jsonObject.getString("title"));
-            //parsedAlbum.setCatalogueNumber(labels.getJSONObject(0).getString("catno"));
+
             String catNo = "";
             for (int i=0; i<labels.length(); i++) {
                 if (i == labels.length()-1) {
@@ -69,7 +69,7 @@ public class AlbumJsonParser {
                     parsedAlbum.setLengthType(LengthType.OTHER);
                     break;
             }
-            // parsedAlbum.setLengthType(LengthType.LP);
+
             String medium = formats.getJSONObject(0).getString("name");
             switch (medium) {
                 case "Vinyl":
@@ -109,4 +109,3 @@ public class AlbumJsonParser {
         return parsedSongs;
     }
 }
-

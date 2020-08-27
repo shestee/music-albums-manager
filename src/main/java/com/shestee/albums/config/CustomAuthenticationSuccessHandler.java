@@ -14,9 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.shestee.albums.entity.User;
-import com.shestee.albums.service.UserService;
-
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -38,8 +35,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		// now place in the session
 		HttpSession session = request.getSession();
 		session.setAttribute("user", theUser);
-		
-		// forward to home page
 		
 		response.sendRedirect(request.getContextPath() + "/list");
 	}

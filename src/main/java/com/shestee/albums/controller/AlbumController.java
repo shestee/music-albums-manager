@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class AlbumController {
@@ -117,8 +114,8 @@ public class AlbumController {
 
     @GetMapping("/importFromSheet")
     public String importFromSheet() {
-        List<Album> albums = sheetImporter.copyFromXclToDB();
-        List<Song> songs = sheetImporter.addSongsFromXCLsheet();
+        List<Album> albums = sheetImporter.getAlbumsFromXclSheet();
+        List<Song> songs = sheetImporter.getSongsFromXclSheet();
 
         User user = userService.findByUsername(authenticationFacade.getAuthentication().getName());
 

@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface SongRepository extends JpaRepository<Song, Integer> {
 
-    // no need to write any code, it works just like this
-
     List<Song> findByAlbumIdOrderByTrackNumber(int albumId);
 }

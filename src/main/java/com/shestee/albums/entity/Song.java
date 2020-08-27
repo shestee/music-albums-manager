@@ -33,15 +33,6 @@ public class Song {
         this.title = title;
     }
 
-/*    public Song(int id, String trackNumber, String title, String music, String lyrics, int albumId) {
-        this.id = id;
-        this.trackNumber = trackNumber;
-        this.title = title;
-        this.music = music;
-        this.lyrics = lyrics;
-        this.albumId = albumId;
-    }*/
-
     public Song(String trackNumber, String title, String music, String lyrics, int albumId) {
         this.trackNumber = trackNumber;
         this.title = title;

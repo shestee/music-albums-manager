@@ -2,7 +2,6 @@ package com.shestee.albums.service;
 
 import com.shestee.albums.dao.UserRepository;
 import com.shestee.albums.dto.UserRegistrationDto;
-import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Role;
 import com.shestee.albums.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +43,6 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserRegistrationDto userDto) {
         User user = new User();
 
-        // assign user details to the user object
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 

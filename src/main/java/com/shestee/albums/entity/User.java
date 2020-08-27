@@ -1,7 +1,5 @@
 package com.shestee.albums.entity;
 
-import org.hibernate.engine.internal.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
