@@ -18,7 +18,20 @@
 	<h3>Album Directory</h3>
 	<hr>
 
-	<!-- Add a button -->
+	<!-- Search form -->
+	<form action="#" th:action="@{/processSearch}" th:object="${searchDto}" method="POST">
+		<input id="search" name="search" th:field="*{query}" type="text"/>
+		Search by:
+		<select name="searchOption">
+			<option th:each="searchOpt : ${T(com.shestee.albums.dto.enums.SearchOptions).values()}"
+					th:value="${searchOpt}" th:text="${searchOpt}" th:field="*{searchOption}"
+					class="form-control mb-4 col-4">
+			</option>
+		</select>
+		<button type="submit" class="tn btn-primary btn-small mb-3">Search</button>
+	</form>
+
+	<!-- Add an add button -->
 	<a th:href="@{/showFormForAdd}"
 		class="btn btn-primary btn-small mb-3">
 		Add Album
@@ -40,7 +53,6 @@
 		</thead>
 		
 		<tbody>
-			<!-- Thymeleaf expression for looping over data (here: list of employees) -->
 			<tr th:each="tempAlbum, stats : ${albums}">
 				<td th:text="${stats.index+1}"/>
 				<td th:text="${tempAlbum.artist}"/>
@@ -51,23 +63,20 @@
 				<td th:text="${tempAlbum.year}"/>
 				<td th:text="${tempAlbum.info}"/>
 
-				<!-- Add update button link -->
+				<!-- Add "update" button -->
 				<td>
-					<div class="text-center">
-						<!-- Add "update" button/link -->
-						<!--<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
-							class="btn btn-info btn-sm">
+					<div class="btn-group">
+						<a th:href="@{/showFormForUpdate(albumId=${tempAlbum.id})}"
+						   class="btn btn-info btn-sm">
 							Update
-						</a>-->
-						
-						<!-- Add "delete" button/link -->
+
+						<!-- Add "delete" button -->
 						<a th:href="@{/delete(albumId=${tempAlbum.id})}"
-							class="btn btn-danger btn-sm"
-							onclick="if (!(confirm('Are you sure you want to delete this album?'))) return false">
+						   class="btn btn-danger btn-sm"
+						   onclick="if (!(confirm('Are you sure you want to delete this album?'))) return false">
 							Delete
 						</a>
 					</div>
-					
 				</td>
 			</tr>
 		</tbody>

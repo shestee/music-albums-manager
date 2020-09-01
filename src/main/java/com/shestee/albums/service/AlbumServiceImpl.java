@@ -12,7 +12,9 @@ import com.shestee.albums.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
@@ -51,18 +53,36 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<Album> findByArtist(String artist) {
-        return null;
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByArtistContainingIgnoreCaseAndUserId(artist, user.getId());
     }
 
     @Override
     public Album findById(int id) {
-        return null;
+        Optional<Album> result = albumRepository.findById(id);
+
+        Album album = null;
+
+        if (result.isPresent()) {
+            album = result.get();
+        } else {
+            throw new RuntimeException("Did not find album id - " + id);
+        }
+
+        return album;
     }
 
     @Override
     public List<Album> findByTitle(String title) {
-        return null;
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByTitleContainingIgnoreCaseAndUserId(title, user.getId());
     }
+
+
 
     @Override
     public List<Album> findByYear(int year) {
@@ -86,7 +106,10 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<Album> findByGenre(String genre) {
-        return null;
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByGenreContainingIgnoreCaseAndUserId(genre, user.getId());
     }
 
     @Override
@@ -117,7 +140,6 @@ public class AlbumServiceImpl implements AlbumService {
     public void addAllSongsToAlbum(int albumId, String releaseID) {
         List<Song> songs = AlbumJsonParser.parseSongsFromAlbumJson(jsonUtil.getAlbumJson(releaseID));
         for (Song song : songs) {
-            song.setAlbumId(albumId);
             songService.addSong(song);
         }
     }
@@ -126,7 +148,7 @@ public class AlbumServiceImpl implements AlbumService {
     public void addAllSongsToLastAlbum(String releaseId) {
         List<Song> songs = AlbumJsonParser.parseSongsFromAlbumJson(jsonUtil.getAlbumJson(releaseId));
         for (Song song : songs) {
-            song.setAlbumId(albumRepository.findTopByOrderByIdDesc().getId());
+            song.setAlbum(albumRepository.findTopByOrderByIdDesc());
             songService.addSong(song);
         }
     }

@@ -12,8 +12,7 @@ import java.util.List;
 @Table(name = "albums")
 public class Album {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String artist;
@@ -45,8 +44,8 @@ public class Album {
     @Column(name = "user_id")
     private int userId;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "album_id")
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY,
+                cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Song> songs;
 
     public Album() {

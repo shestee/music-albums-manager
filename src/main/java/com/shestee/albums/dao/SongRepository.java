@@ -1,6 +1,5 @@
 package com.shestee.albums.dao;
 
-import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
 

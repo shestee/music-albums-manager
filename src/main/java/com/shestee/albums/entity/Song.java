@@ -22,8 +22,13 @@ public class Song {
     @Column(name = "sheet_album_id")
     private int sheetAlbumId;
 
-    @Column(name = "album_id")
-    private int albumId;
+/*    @Column(name = "album_id", insertable = false, updatable = false)
+    private int albumId;*/
+
+    @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.DETACH,
+                        CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "album_id")
+    private Album album;
 
     public Song() {
     }
@@ -38,7 +43,7 @@ public class Song {
         this.title = title;
         this.music = music;
         this.lyrics = lyrics;
-        this.albumId = albumId;
+//        this.albumId = albumId;
     }
 
     // constructor for sheet importer
@@ -48,7 +53,7 @@ public class Song {
         this.music = music;
         this.lyrics = lyrics;
         this.sheetAlbumId = sheetAlbumId;
-        this.albumId = albumId;
+//        this.albumId = albumId;
     }
 
     public int getId() {
@@ -104,13 +109,21 @@ public class Song {
         this.sheetAlbumId = sheetAlbumId;
     }
 
-    public int getAlbumId() {
+/*    public int getAlbumId() {
         return albumId;
     }
 
     public Song setAlbumId(int albumId) {
         this.albumId = albumId;
         return this;
+    }*/
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     @Override
@@ -120,6 +133,7 @@ public class Song {
                 ", music: " + music +
                 ", lyrics: " + lyrics +
                 " (id=" + id +
-                ", albumId=" + albumId + ");\n";
+//                ", albumId=" + albumId
+                ");\n";
     }
 }

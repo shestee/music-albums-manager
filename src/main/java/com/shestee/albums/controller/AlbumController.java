@@ -2,6 +2,7 @@ package com.shestee.albums.controller;
 
 import com.shestee.albums.config.AuthenticationFacade;
 import com.shestee.albums.dao.UserRepository;
+import com.shestee.albums.dto.SearchDto;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import com.shestee.albums.entity.User;
@@ -58,6 +59,8 @@ public class AlbumController {
 
         theModel.addAttribute("albums", albums);
 
+        theModel.addAttribute("searchDto", new SearchDto());
+
         return "/albums/list-albums";
     }
 
@@ -70,6 +73,8 @@ public class AlbumController {
         if (discogsId != null) {
             albumService.addAllSongsToLastAlbum(discogsId);
         }
+
+        discogsId = null;
 
         return "redirect:/list";
     }
@@ -90,6 +95,17 @@ public class AlbumController {
         Album album = new Album();
 
         theModel.addAttribute("album", album);
+
+        return "/albums/album-form";
+    }
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("albumId") int albumId, Model theModel) {
+        // Get album by id
+        Album album = albumService.findById(albumId);
+
+        // add album to the model
+        theModel.addAttribute(album);
 
         return "/albums/album-form";
     }
@@ -121,16 +137,53 @@ public class AlbumController {
 
         for (Album album : albums) {
             album.setUserId(user.getId());
-            albumService.addAlbum(album);
 
             int sheetAlbumId = album.getSheetAlbumId();
 
             songs.stream()
                  .filter(song -> song.getSheetAlbumId() == sheetAlbumId)
-                 .map(song -> song.setAlbumId(albumService.getIdBysheetAlbumId(sheetAlbumId)))
-                 .forEach(song -> songService.addSong(song));
+                 .forEach(song -> {
+                     song.setAlbum(album);
+                     songService.addSong(song);
+                 });
+
+            albumService.addAlbum(album);
         }
 
         return "redirect:/list";
+    }
+
+/*    @GetMapping("/searchAlbums")
+    public String searchAlbums(Model theModel) {
+        SearchDto searchDto = new SearchDto();
+
+        theModel.addAttribute("searchDto", searchDto);
+
+        return "redirect:/list";
+    }*/
+    
+    @PostMapping("/processSearch")
+    public String processSearch(@ModelAttribute("searchDto") SearchDto searchDto, Model theModel) {
+        List<Album> foundAlbums = null;
+
+        switch (searchDto.getSearchOption()) {
+            case TITLE:
+                foundAlbums = albumService.findByTitle(searchDto.getQuery());
+                break;
+            case ARTIST:
+                foundAlbums = albumService.findByArtist(searchDto.getQuery());
+                break;
+            case GENRE:
+                foundAlbums = albumService.findByGenre(searchDto.getQuery());
+                break;
+            default:
+                System.out.println("Something's not right...");
+                break;
+        }
+
+        theModel.addAttribute("albums", foundAlbums);
+        
+        return "/albums/list-albums";
+        
     }
 }

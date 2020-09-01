@@ -1,5 +1,5 @@
 create table albums (
-	id int primary key auto_increment,
+	id int primary key auto_increment not null,
 	artist varchar(100) not null,
 	title varchar(160) not null,
 	medium enum('VINYL','CD','CASSETTE','FILES', 'OTHER') not null,
