@@ -41,3 +41,7 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/michal
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:390)
 	... 24 more
+2020-09-01 13:46:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "TITLE VARCHAR(160)": "STRINGDECODE('Na Wiosn\u0119, Setki Kwiat\u00f3w, W Jesieni Ksi\u0119\u017cyc \u017bniwny, W Lecie Powiew Rze\u017awi\u0105cy, W... (208)"
+Value too long for column "TITLE VARCHAR(160)": "STRINGDECODE('Na Wiosn\u0119, Setki Kwiat\u00f3w, W Jesieni Ksi\u0119\u017cyc \u017bniwny, W Lecie Powiew Rze\u017awi\u0105cy, W... (208)"; SQL statement:
+insert into songs (album_id, lyrics, music, sheet_album_id, title, track_number, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]

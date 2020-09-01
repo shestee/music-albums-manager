@@ -6,6 +6,7 @@ import com.shestee.albums.dto.SearchDto;
 import com.shestee.albums.entity.Album;
 import com.shestee.albums.entity.Song;
 import com.shestee.albums.entity.User;
+import com.shestee.albums.entity.enums.Medium;
 import com.shestee.albums.parsers.AlbumJsonParser;
 import com.shestee.albums.service.AlbumService;
 import com.shestee.albums.service.SongService;
@@ -152,29 +153,32 @@ public class AlbumController {
 
         return "redirect:/list";
     }
-
-/*    @GetMapping("/searchAlbums")
-    public String searchAlbums(Model theModel) {
-        SearchDto searchDto = new SearchDto();
-
-        theModel.addAttribute("searchDto", searchDto);
-
-        return "redirect:/list";
-    }*/
     
     @PostMapping("/processSearch")
     public String processSearch(@ModelAttribute("searchDto") SearchDto searchDto, Model theModel) {
         List<Album> foundAlbums = null;
 
-        switch (searchDto.getSearchOption()) {
+        switch (searchDto.getSearchGeneralOption()) {
             case TITLE:
-                foundAlbums = albumService.findByTitle(searchDto.getQuery());
+                if (searchDto.getSearchFormatOption().equals(Medium.ANY)) {
+                    foundAlbums = albumService.findByTitle(searchDto.getQuery());
+                } else {
+                    foundAlbums = albumService.findByTitleAndFormat(searchDto.getQuery(), searchDto.getSearchFormatOption());
+                }
                 break;
             case ARTIST:
-                foundAlbums = albumService.findByArtist(searchDto.getQuery());
+                if (searchDto.getSearchFormatOption().equals(Medium.ANY)) {
+                    foundAlbums = albumService.findByArtist(searchDto.getQuery());
+                } else {
+                    foundAlbums = albumService.findByArtistAndFormat(searchDto.getQuery(), searchDto.getSearchFormatOption());
+                }
                 break;
             case GENRE:
-                foundAlbums = albumService.findByGenre(searchDto.getQuery());
+                if (searchDto.getSearchFormatOption().equals(Medium.ANY)) {
+                    foundAlbums = albumService.findByGenre(searchDto.getQuery());
+                } else {
+                    foundAlbums = albumService.findByGenreAndFormat(searchDto.getQuery(), searchDto.getSearchFormatOption());
+                }
                 break;
             default:
                 System.out.println("Something's not right...");
@@ -184,6 +188,5 @@ public class AlbumController {
         theModel.addAttribute("albums", foundAlbums);
         
         return "/albums/list-albums";
-        
     }
 }

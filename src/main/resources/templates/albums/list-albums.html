@@ -22,12 +22,21 @@
 	<form action="#" th:action="@{/processSearch}" th:object="${searchDto}" method="POST">
 		<input id="search" name="search" th:field="*{query}" type="text"/>
 		Search by:
-		<select name="searchOption">
-			<option th:each="searchOpt : ${T(com.shestee.albums.dto.enums.SearchOptions).values()}"
-					th:value="${searchOpt}" th:text="${searchOpt}" th:field="*{searchOption}"
+		<select name="searchGeneralOption">
+			<option th:each="searchOpt : ${T(com.shestee.albums.dto.enums.SearchGeneralOptions).values()}"
+					th:value="${searchOpt}" th:text="${searchOpt}" th:field="*{searchGeneralOption}"
 					class="form-control mb-4 col-4">
 			</option>
 		</select>
+
+		Format:
+		<select name="searchFormatOption">
+			<option th:each="searchFormatOpt : ${T(com.shestee.albums.entity.enums.Medium).values()}"
+					th:value="${searchFormatOpt}" th:text="${searchFormatOpt}" th:field="*{searchFormatOption}"
+					class="form-control mb-4 col-4">
+			</option>
+		</select>
+
 		<button type="submit" class="tn btn-primary btn-small mb-3">Search</button>
 	</form>
 

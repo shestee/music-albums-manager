@@ -12,7 +12,6 @@ import com.shestee.albums.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,12 +51,22 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public List<Album> findByArtistAndFormat(String artist, Medium searchFormatOption) {
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByArtistContainingIgnoreCaseAndMediumAndUserId(artist, searchFormatOption, user.getId());
+    }
+
+    @Override
     public List<Album> findByArtist(String artist) {
         String userName = authenticationFacade.getAuthentication().getName();
         User user = userService.findByUsername(userName);
 
         return albumRepository.findByArtistContainingIgnoreCaseAndUserId(artist, user.getId());
     }
+
+
 
     @Override
     public Album findById(int id) {
@@ -75,14 +84,20 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public List<Album> findByTitleAndFormat(String title, Medium searchFormatOption) {
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByTitleContainingIgnoreCaseAndMediumAndUserId(title, searchFormatOption, user.getId());
+    }
+
+    @Override
     public List<Album> findByTitle(String title) {
         String userName = authenticationFacade.getAuthentication().getName();
         User user = userService.findByUsername(userName);
 
         return albumRepository.findByTitleContainingIgnoreCaseAndUserId(title, user.getId());
     }
-
-
 
     @Override
     public List<Album> findByYear(int year) {
@@ -111,6 +126,15 @@ public class AlbumServiceImpl implements AlbumService {
 
         return albumRepository.findByGenreContainingIgnoreCaseAndUserId(genre, user.getId());
     }
+
+    @Override
+    public List<Album> findByGenreAndFormat(String genre, Medium searchFormatOption) {
+        String userName = authenticationFacade.getAuthentication().getName();
+        User user = userService.findByUsername(userName);
+
+        return albumRepository.findByGenreContainingIgnoreCaseAndMediumAndUserId(genre, searchFormatOption, user.getId());
+    }
+
 
     @Override
     public void addAlbum(Album album) {

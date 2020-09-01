@@ -12,10 +12,12 @@ public interface AlbumService {
 
     List<Album> getUsersAlbums();
 
+    List<Album> findByArtistAndFormat(String artist, Medium searchFormatOption);
     List<Album> findByArtist(String artist);
 
     Album findById(int id);
 
+    List<Album> findByTitleAndFormat(String title, Medium searchFormatOption);
     List<Album> findByTitle(String title);
 
     List<Album> findByYear(int year);
@@ -27,6 +29,7 @@ public interface AlbumService {
     List<Album> findByLengthType(LengthType lengthType);
 
     List<Album> findByGenre(String genre);
+    List<Album> findByGenreAndFormat(String genre, Medium searchFormatOption);
 
     void addAlbum(Album album);
 

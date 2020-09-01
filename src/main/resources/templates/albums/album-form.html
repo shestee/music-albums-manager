@@ -41,8 +41,9 @@
 
 			<p>Medium:
 			<select name="medium">
-				<option th:each="mediumOpt : ${T(com.shestee.albums.entity.enums.Medium).values()}"
-						th:value="${mediumOpt}" th:text="${mediumOpt}" th:field="*{medium}"
+				<option th:each="mediumOpt,mediumOptStat : ${T(com.shestee.albums.entity.enums.Medium).values()}"
+						th:if="${mediumOptStat.count} &gt; 1" th:value="${mediumOpt}" th:text="${mediumOpt}"
+						th:field="*{medium}"
 						class="form-control mb-4 col-4">
 				</option>
 			</select></p>
