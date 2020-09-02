@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SongServiceImpl implements SongService {
@@ -29,8 +30,17 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song getById(int id) {
-        return null;
+    public Song getSongById(int id) {
+        Optional<Song> result = songRepository.findById(id);
+        Song song = null;
+
+        if (result.isPresent()) {
+            song = result.get();
+        } else {
+            throw new RuntimeException("Did not find song id - " + id);
+        }
+
+        return song;
     }
 
     @Override
@@ -55,7 +65,8 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void removeSongById(int id) {
-
+        Song song = getSongById(id);
+        songRepository.delete(song);
     }
 
     @Override

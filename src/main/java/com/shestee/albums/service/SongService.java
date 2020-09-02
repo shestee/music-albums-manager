@@ -8,7 +8,7 @@ public interface SongService {
 
     List<Song> findByAlbumId(int albumId);
 
-    Song getById(int id);
+    Song getSongById(int id);
 
     List<Song> findByTitle(String title);
 

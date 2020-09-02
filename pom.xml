@@ -45,7 +45,7 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-		</dependency>rzypek
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+
+	<title>Add Song</title>
+</head>
+
+<body>
+	<div class="container">
+		<h3>Album Directory</h3>
+		<hr>
+		
+		<p class="h4 mb-4">
+			Save Song
+		</p>
+		
+		<form action="#" th:action="@{/addSong}"
+						 th:object="${song}" method="POST">
+						 
+			<!-- Add hidden form fields to handle the update -->
+			<input type="hidden" th:field="*{id}"/>
+
+			<input type="text" th:field="*{trackNumber}"
+				   class="form-control mb-4 col-4" placeholder="Track No."/>
+					
+			<input type="text" th:field="*{title}"
+					class="form-control mb-4 col-4" placeholder="Title"/>
+
+			<input type="text" th:field="*{music}"
+					class="form-control mb-4 col-4" placeholder="Composed by:"/>
+
+			<input type="text" th:field="*{lyrics}"
+					class="form-control mb-4 col-4" placeholder="Lyrics by:"/>
+
+			<input type="hidden" th:field="*{sheetAlbumId}"/>
+
+			<input type="hidden" th:field="*{album}"/>
+
+			<button type="submit" class="btn btn-info col-2">Save</button>
+			
+		</form>
+		
+		<hr>
+		<a th:href="@{/showSongs(albumId=${album.id})}">Back to Songs List</a>
+	</div>
+
+</body>
+
+</html>
