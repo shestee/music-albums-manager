@@ -21,32 +21,31 @@ import java.util.List;
 
 @Controller
 public class AlbumController {
-    @Autowired
-    UserRepository userRepository;
 
-    @Autowired
     AuthenticationFacade authenticationFacade;
 
-    @Autowired
     UserService userService;
 
-    private String discogsId;
-    //private static Album album;
-
-    @Autowired
     private SheetImporterImpl sheetImporter;
 
-    @Autowired
     private AlbumJsonParser albumParser;
 
-    @Autowired
     private SongService songService;
 
     private AlbumService albumService;
 
-    @Autowired
-    public AlbumController(AlbumService theAlbumService) {
-        albumService = theAlbumService;
+    private String discogsId;
+
+    public AlbumController(AuthenticationFacade authenticationFacade, UserService userService,
+                           SheetImporterImpl sheetImporter, AlbumJsonParser albumParser,
+                           SongService songService, AlbumService albumService) {
+
+        this.authenticationFacade = authenticationFacade;
+        this.userService = userService;
+        this.sheetImporter = sheetImporter;
+        this.albumParser = albumParser;
+        this.songService = songService;
+        this.albumService = albumService;
     }
 
     @GetMapping("/list")

@@ -34,7 +34,6 @@
         </thead>
 
         <tbody>
-        <!-- Thymeleaf expression for looping over data (here: list of employees) -->
         <tr th:each="tempSong : ${songs}">
             <td th:text="${tempSong.trackNumber}"/>
             <td th:text="${tempSong.title}"/>
