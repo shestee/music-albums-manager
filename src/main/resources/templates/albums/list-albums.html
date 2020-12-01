@@ -13,14 +13,14 @@
 </head>
 
 <body>
-
 <div class="container">
+	<div th:insert="fragments/auth-bar :: auth"></div>
 	<h3>Album Directory</h3>
 	<hr>
 
 	<!-- Search form -->
 	<form action="#" th:action="@{/processSearch}" th:object="${searchDto}" method="POST">
-		<input id="search" name="search" th:field="*{query}" type="text"/>
+		<input id="search" th:field="*{query}" type="text"/>
 		Search by:
 		<select name="searchGeneralOption">
 			<option th:each="searchOpt : ${T(com.shestee.albums.dto.enums.SearchGeneralOptions).values()}"
@@ -78,6 +78,7 @@
 						<a th:href="@{/showFormForUpdateAlbum(albumId=${tempAlbum.id})}"
 						   class="btn btn-info btn-sm">
 							Update
+						</a>
 
 						<!-- Add "delete" button -->
 						<a th:href="@{/delete(albumId=${tempAlbum.id})}"

@@ -1,0 +1,11 @@
+<div th:fragment="auth">
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <span class="nav-link disabled" aria-disabled="true"
+                  th:text="'Logged user: ' + ${#authentication.getPrincipal().getUsername()}"></span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/logout}" tabindex="-1">Logout</a>
+        </li>
+    </ul>
+</div>
